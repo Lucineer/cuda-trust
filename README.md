@@ -1,42 +1,91 @@
 # cuda-trust
 
-**Multi-context trust with exponential decay and Bayesian fusion.**
+Trust engine — grows slowly, decays fast, multi-context trust profiles with Bayesian fusion (Rust)
 
-> Trust is earned slowly and lost quickly.
-> This asymmetry is the foundation of fleet security.
+Part of the Cocapn fleet layer — how vessels coordinate, route, and scale.
 
-## How It Works
+## What It Does
 
-Trust in the fleet is not binary. It's a continuously-updated value per context:
+### Key Types
 
-- **Decay**: Trust decreases exponentially with half-life
-- **Growth**: Trust increases slowly (1/10 the decay rate)
-- **Fusion**: Multiple trust signals combine via harmonic mean
-- **Gossip**: Agents share trust assessments with neighbors
+- `TrustScore` — core data structure
+- `TrustProfile` — core data structure
+- `TrustRegistry` — core data structure
+- `TrustSummary` — core data structure
 
-### Trust Contexts
+## Quick Start
 
-An agent can trust "navigator" for pathfinding but not for cooking. Trust is per-capability, not per-agent.
+```bash
+# Clone
+git clone https://github.com/Lucineer/cuda-trust.git
+cd cuda-trust
 
-## Biological Parallel
+# Build
+cargo build
 
-Serotonin IS trust. Sustained social bonds build serotonin receptors. Betrayal down-regulates them. The slow growth / fast decay mirrors real neurochemistry.
+# Run tests
+cargo test
+```
 
-## Ecosystem Integration
+## Usage
 
-- `cuda-a2a` - TrustScore used for message routing
-- `cuda-social` - Reputation is trust aggregated across agents
-- `cuda-did` - DID attestations build trust
-- `cuda-compliance` - Trust gates policy enforcement
-- `cuda-confidence` - Same mathematical structure as confidence
+```rust
+use cuda_trust::*;
 
-## See Also
+// See src/lib.rs for full API
+// 12 unit tests included
+```
 
-- [cuda-a2a](https://github.com/Lucineer/cuda-a2a) - Trust in message routing
-- [cuda-social](https://github.com/Lucineer/cuda-social) - Reputation system
-- [cuda-did](https://github.com/Lucineer/cuda-did) - Identity verification
-- [cuda-compliance](https://github.com/Lucineer/cuda-compliance) - Policy enforcement
+### Available Implementations
+
+- `TrustScore` — see source for methods
+- `TrustProfile` — see source for methods
+- `TrustRegistry` — see source for methods
+
+## Testing
+
+```bash
+cargo test
+```
+
+12 unit tests covering core functionality.
+
+## Architecture
+
+This crate is part of the **Cocapn Fleet** — a git-native multi-agent ecosystem.
+
+- **Category**: fleet
+- **Language**: Rust
+- **Dependencies**: See `Cargo.toml`
+- **Status**: Active development
+
+## Related Crates
+
+- [cuda-semantic-router](https://github.com/Lucineer/cuda-semantic-router)
+- [cuda-fleet-topology](https://github.com/Lucineer/cuda-fleet-topology)
+- [cuda-adaptive-rate](https://github.com/Lucineer/cuda-adaptive-rate)
+- [cuda-bottleneck](https://github.com/Lucineer/cuda-bottleneck)
+- [cuda-fleet-health](https://github.com/Lucineer/cuda-fleet-health)
+- [cuda-swarm-agent](https://github.com/Lucineer/cuda-swarm-agent)
+
+## Fleet Position
+
+```
+Casey (Captain)
+├── JetsonClaw1 (Lucineer realm — hardware, low-level systems, fleet infrastructure)
+├── Oracle1 (SuperInstance — lighthouse, architecture, consensus)
+└── Babel (SuperInstance — multilingual scout)
+```
+
+## Contributing
+
+This is a fleet vessel component. Fork it, improve it, push a bottle to `message-in-a-bottle/for-jetsonclaw1/`.
 
 ## License
 
-MIT OR Apache-2.0
+MIT
+
+---
+
+*Built by JetsonClaw1 — part of the Cocapn fleet*
+*See [cocapn-fleet-readme](https://github.com/Lucineer/cocapn-fleet-readme) for the full fleet roadmap*
