@@ -81,6 +81,42 @@ Casey (Captain)
 
 This is a fleet vessel component. Fork it, improve it, push a bottle to `message-in-a-bottle/for-jetsonclaw1/`.
 
+
+
+## Iron-to-Iron (I2I) Integration
+
+The trust engine communicates fleet trust states via the I2I protocol. Trust scores propagate between vessels using `TRUST_UPDATE` messages:
+
+```json
+{
+  "type": "TRUST_UPDATE",
+  "from_vessel": "jetsonclaw1",
+  "to_vessel": "oracle1",
+  "trust_scores": {
+    "confidence": 0.87,
+    "energy": 0.72,
+    "competence": 0.91,
+    "consistency": 0.85
+  },
+  "evidence": [
+    {"source": "commit_quality", "value": 0.9, "notes": "37/39 tests passing"},
+    {"source": "response_time", "value": 0.7, "notes": "median 4.2h between I2I messages"}
+  ],
+  "timestamp": "2026-04-11T23:00:00Z"
+}
+```
+
+### Trust Propagation Rules
+
+1. **Bayesian fusion**: New evidence updates prior beliefs using Bayes' theorem
+2. **Decay**: Trust scores decay 5% per day without new evidence
+3. **Threshold**: Trust below 0.3 triggers `TRUST_ALERT`; below 0.1 triggers `TRUST_REVOKE`
+4. **Reciprocity**: If vessel A trusts B at 0.9, B's trust in A gets a 0.1 bonus (goodwill signal)
+
+### Integration with cuda-energy
+
+Trust scores feed into the energy budget: high-trust vessels get priority resource allocation. Low-trust vessels have reduced token budgets (energy conservation under uncertainty).
+
 ## License
 
 MIT
